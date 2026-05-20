@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashFlow — Settings</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">◈</span>
+            <span class="brand-name">CashFlow</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="transaction.html">Transactions</a></li>
+            <li><a href="add.html">Add New</a></li>
+            <li><a href="reporty.html">Reports</a></li>
+            <li><a href="setting.html" class="active">Settings</a></li>
+        </ul>
+        <button class="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <div>
+                <h1>Settings</h1>
+                <p class="subtitle">Customize your experience</p>
+            </div>
+        </header>
+
+        <div class="settings-grid">
+            <!-- General -->
+            <section class="settings-card animate-in">
+                <h2>General</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Currency</label>
+                        <p class="setting-description">Your preferred currency</p>
+                    </div>
+                    <select id="currency">
+                        <option value="USD">$ USD</option>
+                        <option value="EUR">€ EUR</option>
+                        <option value="GBP">£ GBP</option>
+                        <option value="JPY">¥ JPY</option>
+                        <option value="CAD">$ CAD</option>
+                        <option value="AUD">$ AUD</option>
+                        <option value="INR">₹ INR</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Date Format</label>
+                        <p class="setting-description">How dates are displayed</p>
+                    </div>
+                    <select id="date-format">
+                        <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                        <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                        <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Start of Week</label>
+                        <p class="setting-description">First day of the week</p>
+                    </div>
+                    <select id="start-of-week">
+                        <option value="sunday">Sunday</option>
+                        <option value="monday">Monday</option>
+                    </select>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Light Mode</label>
+                        <p class="setting-description">Toggle light theme</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="dark-mode">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- Budget -->
+            <section class="settings-card animate-in">
+                <h2>Budget Management</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Monthly Budget</label>
+                        <p class="setting-description">Total monthly spending limit</p>
+                    </div>
+                    <div class="input-with-currency">
+                        <span class="currency-prefix" id="budget-currency-prefix">₹</span>
+                        <input type="number" id="monthly-budget" placeholder="0.00" step="0.01">
+                    </div>
+                </div>
+                <div class="category-budgets">
+                    <h3>Category Budgets</h3>
+                    <p class="setting-description" style="margin-bottom:var(--md)">Set limits per category</p>
+                    <div class="budget-list" id="category-budgets-list"></div>
+                    <button class="btn btn-secondary btn-small" id="add-category-budget">+ Add Category Budget</button>
+                </div>
+            </section>
+
+            <!-- Categories -->
+            <section class="settings-card animate-in">
+                <h2>Categories</h2>
+                <div class="categories-section">
+                    <h3>Expense Categories</h3>
+                    <div class="category-list" id="expense-categories"></div>
+                    <div class="add-category">
+                        <input type="text" id="new-expense-category" placeholder="New category name">
+                        <button class="btn btn-primary btn-small" id="add-expense-category">Add</button>
+                    </div>
+                </div>
+                <div class="categories-section" style="margin-top:var(--lg)">
+                    <h3>Income Categories</h3>
+                    <div class="category-list" id="income-categories"></div>
+                    <div class="add-category">
+                        <input type="text" id="new-income-category" placeholder="New category name">
+                        <button class="btn btn-primary btn-small" id="add-income-category">Add</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Management -->
+            <section class="settings-card animate-in">
+                <h2>Data Management</h2>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Export All Data</label>
+                        <p class="setting-description">Download your data as JSON</p>
+                    </div>
+                    <button class="btn btn-secondary btn-sm" id="export-data">↓ Export</button>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <label>Import Data</label>
+                        <p class="setting-description">Restore from a backup file</p>
+                    </div>
+                    <input type="file" id="import-file" accept=".json" style="display:none;">
+                    <button class="btn btn-secondary btn-sm" id="import-data">↑ Import</button>
+                </div>
+                <div class="setting-item danger">
+                    <div class="setting-info">
+                        <label>Clear All Data</label>
+                        <p class="setting-description">Permanently delete all transactions</p>
+                    </div>
+                    <button class="btn btn-danger btn-sm" id="clear-data">Clear All</button>
+                </div>
+            </section>
+
+            <!-- Notifications -->
+            <section class="settings-card animate-in" style="grid-column: span 2;">
+                <h2>Notifications</h2>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 var(--xl);">
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <label>Budget Alerts</label>
+                            <p class="setting-description">Notify when approaching budget limits</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="budget-alerts" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <div class="setting-info">
+                            <label>Alert Threshold</label>
+                            <p class="setting-description">Alert when budget reaches this %</p>
+                        </div>
+                        <select id="alert-threshold">
+                            <option value="50">50%</option>
+                            <option value="75">75%</option>
+                            <option value="80" selected>80%</option>
+                            <option value="90">90%</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="settings-actions">
+            <button class="btn btn-secondary" id="reset-settings">Reset to Defaults</button>
+            <button class="btn btn-primary" id="save-settings">Save All Settings</button>
+        </div>
+    </main>
+
+    <!-- Confirm Modal -->
+    <div class="modal" id="confirm-modal">
+        <div class="modal-content modal-small">
+            <div class="modal-header">
+                <h2 id="confirm-title">Confirm Action</h2>
+                <button class="modal-close" id="close-confirm-modal">×</button>
+            </div>
+            <p id="confirm-message" style="margin-bottom:var(--xl)"></p>
+            <div class="form-actions">
+                <button class="btn btn-secondary" id="cancel-confirm">Cancel</button>
+                <button class="btn btn-danger" id="proceed-confirm">Proceed</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="settings-toast">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message" id="toast-message">Settings saved!</span>
+    </div>
+
+    <footer class="footer">
+        <p>© 2024 CashFlow · Manage your finances wisely</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { initSettingsPage(); });
+    </script>
+</body>
+</html>

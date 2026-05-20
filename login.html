@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashFlow — Sign In</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+        body {
+            background: var(--navy-deep);
+            background-image:
+                radial-gradient(ellipse 70% 50% at 30% 20%, rgba(201,168,76,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 60% at 80% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--lg);
+            flex-direction: column;
+        }
+
+        .login-wrapper {
+            width: 100%;
+            max-width: 420px;
+            animation: loginIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+        }
+        @keyframes loginIn {
+            from { opacity: 0; transform: translateY(24px) scale(0.96); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .login-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--sm);
+            justify-content: center;
+            margin-bottom: var(--xl);
+        }
+        .login-logo {
+            font-size: 2rem;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .login-brand-name {
+            font-family: var(--font-display);
+            font-size: 1.75rem;
+            color: var(--gold);
+            letter-spacing: 0.02em;
+        }
+
+        .login-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--r-xl);
+            padding: var(--2xl) var(--xl);
+            box-shadow: var(--shadow-deep), var(--shadow-glow);
+        }
+
+        .login-headline {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        .login-sub {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: var(--xl);
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--r-lg);
+            padding: 4px;
+            gap: 4px;
+            margin-bottom: var(--xl);
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            border: none;
+            background: none;
+            border-radius: var(--r-md);
+            cursor: pointer;
+            transition: all var(--t-base);
+        }
+        .auth-tab.active {
+            background: var(--surface);
+            color: var(--gold);
+            box-shadow: 0 1px 6px rgba(0,0,0,0.2);
+            border: 1px solid rgba(201,168,76,0.2);
+        }
+
+        .form-panel { display: none; }
+        .form-panel.active { display: block; }
+
+        .login-form-group { margin-bottom: var(--md); }
+        .login-form-group label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+        .input-wrapper { position: relative; }
+        .input-icon {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        .login-form-group input {
+            width: 100%;
+            padding: 0.75rem 0.875rem 0.75rem 2.5rem;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--r-md);
+            font-size: 0.9375rem;
+            color: var(--text);
+            font-family: var(--font-body);
+            transition: all var(--t-fast);
+            outline: none;
+        }
+        .login-form-group input:focus {
+            border-color: var(--gold-dim);
+            background: var(--surface);
+            box-shadow: 0 0 0 3px var(--gold-glow);
+        }
+        .login-form-group input::placeholder { color: var(--text-muted); }
+        .login-form-group input.error { border-color: var(--crimson); box-shadow: 0 0 0 3px var(--crimson-dim); }
+
+        .toggle-password {
+            position: absolute;
+            right: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.35;
+            transition: opacity var(--t-fast);
+            padding: 0;
+            color: var(--text);
+        }
+        .toggle-password:hover { opacity: 0.7; }
+
+        .remember-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--lg);
+        }
+        .remember-label {
+            display: flex;
+            align-items: center;
+            gap: var(--sm);
+            font-size: 0.875rem;
+            color: var(--text-3);
+            cursor: pointer;
+        }
+        .remember-label input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--gold); cursor: pointer; }
+        .forgot-link { font-size: 0.875rem; color: var(--gold); font-weight: 500; transition: color var(--t-fast); }
+        .forgot-link:hover { color: var(--gold-light); }
+
+        .btn-login {
+            width: 100%;
+            padding: 0.875rem;
+            background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+            color: var(--ink);
+            font-size: 0.9375rem;
+            font-weight: 700;
+            font-family: var(--font-body);
+            border: none;
+            border-radius: var(--r-md);
+            cursor: pointer;
+            transition: all var(--t-base);
+            box-shadow: 0 4px 16px rgba(201,168,76,0.25);
+            margin-bottom: var(--md);
+            letter-spacing: 0.02em;
+        }
+        .btn-login:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(201,168,76,0.35); }
+        .btn-login:active { transform: translateY(0); }
+        .btn-login:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        .spinner {
+            display: inline-block;
+            width: 14px; height: 14px;
+            border: 2px solid rgba(0,0,0,0.2);
+            border-top-color: var(--ink);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: var(--sm);
+            margin-bottom: var(--md);
+            color: var(--text-muted);
+            font-size: 0.8125rem;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--emerald-dim);
+            color: var(--emerald);
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-body);
+            border: 1px solid rgba(16,185,129,0.25);
+            border-radius: var(--r-md);
+            cursor: pointer;
+            transition: all var(--t-base);
+            margin-bottom: var(--lg);
+        }
+        .btn-demo:hover { background: var(--emerald); color: var(--ink); transform: translateY(-1px); }
+
+        .login-footer-text { text-align: center; font-size: 0.875rem; color: var(--text-muted); }
+
+        .login-error {
+            background: var(--crimson-dim);
+            border: 1px solid rgba(239,68,68,0.3);
+            border-radius: var(--r-md);
+            padding: 0.75rem var(--md);
+            color: var(--crimson);
+            font-size: 0.875rem;
+            margin-bottom: var(--md);
+            display: none;
+        }
+        .login-error.show { display: flex; align-items: center; gap: var(--sm); }
+
+        .password-strength {
+            font-size: 0.75rem;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        .strength-weak   { color: var(--crimson); }
+        .strength-medium { color: var(--amber); }
+        .strength-strong { color: var(--emerald); }
+
+        .login-toast {
+            position: fixed;
+            bottom: var(--xl);
+            right: var(--xl);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 0.875rem var(--lg);
+            border-radius: var(--r-lg);
+            box-shadow: var(--shadow-deep);
+            display: flex;
+            align-items: center;
+            gap: var(--sm);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all var(--t-slow);
+            z-index: 1100;
+            min-width: 240px;
+        }
+        .login-toast.show { transform: translateY(0); opacity: 1; }
+
+        .features-row {
+            display: flex;
+            justify-content: center;
+            gap: var(--xl);
+            margin-top: var(--xl);
+        }
+        .feature-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .feature-icon { font-size: 1.125rem; opacity: 0.6; }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-brand">
+            <span class="login-logo">◈</span>
+            <span class="login-brand-name">CashFlow</span>
+        </div>
+
+        <div class="login-card">
+            <h2 class="login-headline">Welcome back</h2>
+            <p class="login-sub">Sign in to your account to continue</p>
+
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tab-signin" onclick="switchTab('signin')">Sign In</button>
+                <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Create Account</button>
+            </div>
+
+            <!-- Error Banner -->
+            <div class="login-error" id="login-error">
+                <span>⚠</span>
+                <span id="error-text"></span>
+            </div>
+
+            <!-- Sign In Panel -->
+            <div class="form-panel active" id="panel-signin">
+                <form id="signin-form" onsubmit="return false;">
+                    <div class="login-form-group">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">✉</span>
+                            <input type="email" id="signin-email" placeholder="you@example.com" autocomplete="email" required>
+                        </div>
+                    </div>
+                    <div class="login-form-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="signin-password" placeholder="Your password" autocomplete="current-password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('signin-password', this)">👁️</button>
+                        </div>
+                    </div>
+                    <div class="remember-row">
+                        <label class="remember-label">
+                            <input type="checkbox" id="remember-me"> Remember me
+                        </label>
+                        <a href="#" class="forgot-link" onclick="showForgotPassword(event)">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="btn-login" id="signin-btn">Sign In</button>
+                </form>
+                <div class="divider">or</div>
+                <button class="btn-demo" onclick="loginDemo()">⚡ Try Demo Account</button>
+                <p class="login-footer-text">Don't have an account? <a href="#" onclick="switchTab('signup')" style="color:var(--gold);">Create one →</a></p>
+            </div>
+
+            <!-- Sign Up Panel -->
+            <div class="form-panel" id="panel-signup">
+                <form id="signup-form" onsubmit="return false;">
+                    <div class="login-form-group">
+                        <label>Full Name</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">👤</span>
+                            <input type="text" id="signup-name" placeholder="Jane Smith" autocomplete="name" required>
+                        </div>
+                    </div>
+                    <div class="login-form-group">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">✉</span>
+                            <input type="email" id="signup-email" placeholder="you@example.com" autocomplete="email" required>
+                        </div>
+                    </div>
+                    <div class="login-form-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="signup-password" placeholder="Min 8 characters" oninput="checkStrength(this.value)" autocomplete="new-password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('signup-password', this)">👁️</button>
+                        </div>
+                        <div class="password-strength" id="strength-label"></div>
+                    </div>
+                    <div class="login-form-group">
+                        <label>Confirm Password</label>
+                        <div class="input-wrapper">
+                            <span class="input-icon">🔒</span>
+                            <input type="password" id="signup-confirm" placeholder="Repeat password" autocomplete="new-password" required>
+                            <button type="button" class="toggle-password" onclick="togglePassword('signup-confirm', this)">👁️</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-login" id="signup-btn">Create Account</button>
+                </form>
+                <p class="login-footer-text" style="margin-top:var(--sm)">Already have an account? <a href="#" onclick="switchTab('signin')" style="color:var(--gold);">Sign in →</a></p>
+            </div>
+        </div>
+
+        <div class="features-row">
+            <div class="feature-item"><span class="feature-icon">🔐</span>Private</div>
+            <div class="feature-item"><span class="feature-icon">📊</span>Analytics</div>
+            <div class="feature-item"><span class="feature-icon">💾</span>Local Data</div>
+            <div class="feature-item"><span class="feature-icon">🆓</span>Free</div>
+        </div>
+    </div>
+
+    <div class="login-toast" id="login-toast">
+        <span id="toast-icon">✓</span>
+        <span id="toast-msg"></span>
+    </div>
+
+    <script>
+        const AUTH_STORE = 'et_auth_users';
+        const SESSION_KEY = 'et_session';
+        const DEMO = { email: 'demo@cashflow.app', password: 'demo1234', name: 'Demo User' };
+
+        function hashPassword(pw) {
+            let h = 0;
+            for (let i = 0; i < pw.length; i++) h = (Math.imul(31, h) + pw.charCodeAt(i)) | 0;
+            return h.toString(16);
+        }
+        function getUsers() { return JSON.parse(localStorage.getItem(AUTH_STORE) || '{}'); }
+        function saveUsers(u) { localStorage.setItem(AUTH_STORE, JSON.stringify(u)); }
+        function startSession(email, name, persist) {
+            const s = JSON.stringify({ email, name });
+            sessionStorage.setItem(SESSION_KEY, s);
+            if (persist) localStorage.setItem(SESSION_KEY, s);
+            else localStorage.removeItem(SESSION_KEY);
+        }
+        function getSession() {
+            return JSON.parse(sessionStorage.getItem(SESSION_KEY) || localStorage.getItem(SESSION_KEY) || 'null');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            if (getSession()) { window.location.href = 'index.html'; return; }
+            ensureDemoAccount();
+            const saved = localStorage.getItem('et_remembered_email');
+            if (saved) {
+                document.getElementById('signin-email').value = saved;
+                document.getElementById('remember-me').checked = true;
+            }
+        });
+
+        function ensureDemoAccount() {
+            const users = getUsers();
+            if (!users[DEMO.email]) {
+                users[DEMO.email] = { name: DEMO.name, hash: hashPassword(DEMO.password) };
+                saveUsers(users);
+            }
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('panel-' + tab).classList.add('active');
+            hideError();
+        }
+
+        function togglePassword(id, btn) {
+            const input = document.getElementById(id);
+            const hide = input.type === 'password';
+            input.type = hide ? 'text' : 'password';
+            btn.textContent = hide ? '🙈' : '👁️';
+        }
+
+        function checkStrength(pw) {
+            const el = document.getElementById('strength-label');
+            if (!pw) { el.textContent = ''; return; }
+            let s = 0;
+            if (pw.length >= 8) s++;
+            if (/[A-Z]/.test(pw)) s++;
+            if (/[0-9]/.test(pw)) s++;
+            if (/[^A-Za-z0-9]/.test(pw)) s++;
+            const levels = [
+                { cls: 'strength-weak', label: '● Weak' },
+                { cls: 'strength-weak', label: '● Weak' },
+                { cls: 'strength-medium', label: '● Medium' },
+                { cls: 'strength-strong', label: '● Strong' },
+                { cls: 'strength-strong', label: '● Very Strong' },
+            ];
+            el.className = 'password-strength ' + levels[s].cls;
+            el.textContent = levels[s].label;
+        }
+
+        function showError(msg) {
+            document.getElementById('error-text').textContent = msg;
+            document.getElementById('login-error').classList.add('show');
+        }
+        function hideError() { document.getElementById('login-error').classList.remove('show'); }
+
+        function showToast(msg, success = true) {
+            const t = document.getElementById('login-toast');
+            document.getElementById('toast-icon').textContent = success ? '✓' : '⚠';
+            document.getElementById('toast-msg').textContent = msg;
+            t.style.borderColor = success ? 'rgba(16,185,129,0.3)' : 'rgba(245,158,11,0.3)';
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 3000);
+        }
+
+        function setLoading(btnId, loading, label) {
+            const btn = document.getElementById(btnId);
+            btn.disabled = loading;
+            btn.innerHTML = loading ? `<span class="spinner"></span> Please wait…` : label;
+        }
+
+        document.getElementById('signin-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            hideError();
+            const email = document.getElementById('signin-email').value.trim().toLowerCase();
+            const password = document.getElementById('signin-password').value;
+            const remember = document.getElementById('remember-me').checked;
+            setLoading('signin-btn', true, 'Sign In');
+            setTimeout(() => {
+                setLoading('signin-btn', false, 'Sign In');
+                const users = getUsers();
+                const user = users[email];
+                if (!user) { showError('No account found. Please create one.'); return; }
+                if (user.hash !== hashPassword(password)) { showError('Incorrect password. Please try again.'); return; }
+                if (remember) localStorage.setItem('et_remembered_email', email);
+                else localStorage.removeItem('et_remembered_email');
+                startSession(email, user.name, remember);
+                showToast(`Welcome back, ${user.name.split(' ')[0]}!`);
+                setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+            }, 700);
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            hideError();
+            const name = document.getElementById('signup-name').value.trim();
+            const email = document.getElementById('signup-email').value.trim().toLowerCase();
+            const pass = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            if (pass !== confirm) {
+                showError('Passwords do not match.');
+                document.getElementById('signup-confirm').classList.add('error');
+                return;
+            }
+            document.getElementById('signup-confirm').classList.remove('error');
+            setLoading('signup-btn', true, 'Create Account');
+            setTimeout(() => {
+                setLoading('signup-btn', false, 'Create Account');
+                const users = getUsers();
+                if (users[email]) { showError('Account already exists. Please sign in.'); return; }
+                users[email] = { name, hash: hashPassword(pass), createdAt: new Date().toISOString() };
+                saveUsers(users);
+                startSession(email, name, false);
+                showToast(`Account created! Welcome, ${name.split(' ')[0]}!`);
+                setTimeout(() => { window.location.href = 'index.html'; }, 1300);
+            }, 800);
+        });
+
+        function loginDemo() {
+            switchTab('signin');
+            document.getElementById('signin-email').value = DEMO.email;
+            document.getElementById('signin-password').value = DEMO.password;
+            setTimeout(() => document.getElementById('signin-form').dispatchEvent(new Event('submit')), 200);
+        }
+
+        function showForgotPassword(e) {
+            e.preventDefault();
+            const email = document.getElementById('signin-email').value.trim().toLowerCase();
+            if (!email) { showError('Enter your email address first.'); return; }
+            const users = getUsers();
+            if (users[email]) showToast(`Reset link sent to ${email} ✉`);
+            else showError('No account found with that email.');
+        }
+    </script>
+</body>
+</html>

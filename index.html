@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashFlow — Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">◈</span>
+            <span class="brand-name">CashFlow</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Dashboard</a></li>
+            <li><a href="transaction.html">Transactions</a></li>
+            <li><a href="add.html">Add New</a></li>
+            <li><a href="reporty.html">Reports</a></li>
+            <li><a href="setting.html">Settings</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+        <button class="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <main class="container">
+        <header class="page-header">
+            <div>
+                <h1>Dashboard</h1>
+                <p class="subtitle">Your financial overview</p>
+            </div>
+            <a href="add.html" class="btn btn-primary">+ Add Transaction</a>
+        </header>
+
+        <!-- Summary Cards -->
+        <section class="summary-cards">
+            <div class="card balance-card animate-in">
+                <div class="card-icon">◈</div>
+                <div>
+                    <span class="card-label">Net Balance</span>
+                    <span class="card-value" id="total-balance">₹0.00</span>
+                    <span class="card-trend">All time</span>
+                </div>
+            </div>
+            <div class="card income-card animate-in">
+                <div class="card-icon">↑</div>
+                <div>
+                    <span class="card-label">Total Income</span>
+                    <span class="card-value" id="total-income">₹0.00</span>
+                    <span class="card-trend">All time</span>
+                </div>
+            </div>
+            <div class="card expense-card animate-in">
+                <div class="card-icon">↓</div>
+                <div>
+                    <span class="card-label">Total Expenses</span>
+                    <span class="card-value" id="total-expenses">₹0.00</span>
+                    <span class="card-trend">All time</span>
+                </div>
+            </div>
+            <div class="card savings-card animate-in">
+                <div class="card-icon">⊕</div>
+                <div>
+                    <span class="card-label">This Month</span>
+                    <span class="card-value" id="monthly-balance">₹0.00</span>
+                    <span class="card-trend" id="month-name">—</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <div class="chart-container animate-in">
+                <h2>Spending by Category</h2>
+                <canvas id="category-chart"></canvas>
+            </div>
+            <div class="chart-container animate-in">
+                <h2>Income vs Expenses — Last 6 Months</h2>
+                <canvas id="trend-chart"></canvas>
+            </div>
+        </section>
+
+        <!-- Recent Transactions -->
+        <section class="recent-transactions" style="margin-bottom: var(--xl);">
+            <div class="section-header">
+                <h2>Recent Transactions</h2>
+                <a href="transaction.html" class="view-all">View All →</a>
+            </div>
+            <div class="transactions-list" id="recent-transactions">
+                <div class="no-transactions">
+                    <span class="empty-icon">◈</span>
+                    No transactions yet. <a href="add.html" style="color:var(--gold)">Add your first one →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Budget Overview -->
+        <section class="budget-overview animate-in">
+            <div class="section-header">
+                <h2>Budget Progress</h2>
+                <a href="setting.html" class="view-all">Manage →</a>
+            </div>
+            <div id="budget-progress">
+                <p style="color:var(--text-muted);font-size:0.875rem;padding-top:var(--sm)">No budgets configured yet. <a href="setting.html" style="color:var(--gold)">Set one up →</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 CashFlow · Manage your finances wisely</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initDashboard();
+        });
+    </script>
+</body>
+</html>

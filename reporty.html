@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CashFlow — Reports</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="logo">◈</span>
+            <span class="brand-name">CashFlow</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="transaction.html">Transactions</a></li>
+            <li><a href="add.html">Add New</a></li>
+            <li><a href="reporty.html" class="active">Reports</a></li>
+            <li><a href="setting.html">Settings</a></li>
+        </ul>
+        <button class="mobile-menu-btn" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+ 
+    <main class="container">
+        <header class="page-header">
+            <div>
+                <h1>Reports</h1>
+                <p class="subtitle">Detailed financial analysis</p>
+            </div>
+            <div class="date-range-selector">
+                <button class="range-btn" data-range="7">7D</button>
+                <button class="range-btn" data-range="30">30D</button>
+                <button class="range-btn active" data-range="90">3M</button>
+                <button class="range-btn" data-range="180">6M</button>
+                <button class="range-btn" data-range="365">1Y</button>
+                <button class="range-btn" data-range="all">All</button>
+            </div>
+        </header>
+ 
+        <!-- Summary Stats -->
+        <section class="summary-cards" style="margin-bottom: var(--xl);">
+            <div class="card income-card animate-in">
+                <div class="card-icon">↑</div>
+                <div>
+                    <span class="card-label">Period Income</span>
+                    <span class="card-value" id="report-income">₹0.00</span>
+                    <span class="card-trend" id="report-period">—</span>
+                </div>
+            </div>
+            <div class="card expense-card animate-in">
+                <div class="card-icon">↓</div>
+                <div>
+                    <span class="card-label">Period Expenses</span>
+                    <span class="card-value" id="report-expenses">₹0.00</span>
+                    <span class="card-trend">Selected period</span>
+                </div>
+            </div>
+            <div class="card balance-card animate-in">
+                <div class="card-icon">◈</div>
+                <div>
+                    <span class="card-label">Net Savings</span>
+                    <span class="card-value" id="report-savings">₹0.00</span>
+                    <span class="card-trend">Income − Expenses</span>
+                </div>
+            </div>
+            <div class="card savings-card animate-in">
+                <div class="card-icon">%</div>
+                <div>
+                    <span class="card-label">Savings Rate</span>
+                    <span class="card-value" id="report-rate">0%</span>
+                    <span class="card-trend">Of income saved</span>
+                </div>
+            </div>
+        </section>
+ 
+        <div class="reports-grid">
+            <!-- Daily Trend Chart -->
+            <div class="report-card wide animate-in">
+                <h2>Daily Spending Trend</h2>
+                <canvas id="daily-trend-chart" style="max-height:260px"></canvas>
+            </div>
+ 
+            <!-- Expense Pie -->
+            <div class="report-card animate-in">
+                <h2>Expenses by Category</h2>
+                <canvas id="expense-pie-chart" style="max-height:280px"></canvas>
+            </div>
+ 
+            <!-- Income Pie -->
+            <div class="report-card animate-in">
+                <h2>Income by Category</h2>
+                <canvas id="income-pie-chart" style="max-height:280px"></canvas>
+            </div>
+ 
+            <!-- Category Bar -->
+            <div class="report-card wide animate-in">
+                <h2>Spending by Category</h2>
+                <canvas id="category-bar-chart" style="max-height:260px"></canvas>
+            </div>
+ 
+            <!-- Top Expenses -->
+            <div class="report-card animate-in">
+                <h2>Top Expense Items</h2>
+                <div id="top-expenses">
+                    <p style="color:var(--text-muted);font-size:0.875rem;">No data for selected period.</p>
+                </div>
+            </div>
+ 
+            <!-- Category Breakdown Table -->
+            <div class="report-card animate-in">
+                <h2>Category Breakdown</h2>
+                <div style="overflow-x:auto;">
+                    <table style="width:100%;border-collapse:collapse;font-size:0.8125rem;">
+                        <thead>
+                            <tr style="color:var(--text-muted);text-align:left;border-bottom:1px solid var(--border)">
+                                <th style="padding:0.5rem 0.25rem">Category</th>
+                                <th style="padding:0.5rem 0.25rem">Count</th>
+                                <th style="padding:0.5rem 0.25rem">Total</th>
+                                <th style="padding:0.5rem 0.25rem">%</th>
+                                <th style="padding:0.5rem 0.25rem">Avg</th>
+                                <th style="padding:0.5rem 0.25rem">Bar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="category-breakdown-tbody">
+                            <tr><td colspan="6" style="color:var(--text-muted);padding:1rem 0">No expense data.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+ 
+            <!-- Monthly Comparison -->
+            <div class="report-card wide animate-in">
+                <h2>Monthly Comparison (Last 6 Months)</h2>
+                <canvas id="monthly-comparison-chart" style="max-height:260px"></canvas>
+            </div>
+        </div>
+    </main>
+ 
+    <footer class="footer">
+        <p>© 2024 CashFlow · Manage your finances wisely</p>
+    </footer>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { initReportsPage(); });
+    </script>
+</body>
+</html>
